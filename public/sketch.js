@@ -3,9 +3,11 @@ var text = {
     text: ''
 };
 
+var note = -1;
+
 function setup(){
-    socket = io.connect('131.153.18.105');
-    // socket = io.connect('localhost');
+    // socket = io.connect('131.153.18.105');
+    socket = io.connect('localhost');
     $("#text").on("froalaEditor.keyup", function(){
         var html = $(this).froalaEditor('html.get');
         var data = {
@@ -23,11 +25,24 @@ function setup(){
 }
 
 function updateText(data){
-    text.text = data.text;
-    $("#text").froalaEditor('html.set', data.text);
-    var editor = $('#text').data('froala.editor');
-    editor.selection.setAtEnd(editor.$el.get(0));
-    editor.selection.restore();
+    var note_id = data["note_id"];
+    var users = data["users"];
+    var text = data["text"];
+
+    if (note == -1) {
+        note = note_id;
+    }
+    console.log("set note id to", note)
+
+    var ip = socket.handshake.headers["x-real-ip"];
+    var port = socket.handshake.headers["x-real-port"];
+    console.log("addr"+ip)
+    // console.log("data:",note_id, users, text, address);
+    // text.text = data.text;
+    // $("#text").froalaEditor('html.set', data.text);
+    // var editor = $('#text').data('froala.editor');
+    // editor.selection.setAtEnd(editor.$el.get(0));
+    // editor.selection.restore();
 }
 
 function handleRecievedText(data){
