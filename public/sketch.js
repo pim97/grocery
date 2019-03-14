@@ -4,8 +4,8 @@ var text = {
 };
 
 function setup(){
-    // socket = io.connect('131.153.18.105');
-    socket = io.connect('localhost');
+    socket = io.connect('131.153.18.105');
+    // socket = io.connect('localhost');
     $("#text").on("froalaEditor.keyup", function(){
         var html = $(this).froalaEditor('html.get');
         var data = {
